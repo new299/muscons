@@ -1,0 +1,20 @@
+#/bin/bash
+n=10000  # Set this to the shard you would like to process.
+n_total=500  # For a full dataset, set to a larger number such as 500.
+
+function to_shard_id {
+  # ${1}: n=1-based counter
+  # ${2}: n_total=1-based count
+  echo "$( printf %05g "${1}")-of-$(printf "%05g" "${2}")"
+}
+
+shard_id="$(to_shard_id "${n}" "${n_total}")"
+
+echo "$(nproc)"
+
+      # --chunk="${n}"/"${n_total}" \
+ccs --min-rq=0.88 \
+      --report-file ccsreport \
+      -j "$(nproc)" \
+      s.bam \
+      "${shard_id}.ccs.bam"

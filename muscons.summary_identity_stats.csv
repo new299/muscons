@@ -1,0 +1,2 @@
+total_alns,primary_alns,identity,identity_qv,gap_compressed_identity,matches_per_kbp,mismatches_per_kbp,non_hp_ins_per_kbp,non_hp_del_per_kbp,hp_ins_per_kbp,hp_del_per_kbp
+1,1,0.999200,30.970837,0.999200,999.600000,0.000000,0.000000,0.200000,0.400000,0.200000

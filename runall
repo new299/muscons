@@ -1,0 +1,27 @@
+python3 ./makerandomseq.py ./lambda.flat 1 > read
+python ./sim_reads.py read 0.02 0.02 0.02 5 > raw.sam
+samtools fastq raw.sam > raw.fastq
+
+# Muscle Consensus
+python3 ./muscons.py raw.fastq muscons.fastq
+minimap2 --split-prefix 4 -a -t 40 -x map-pb  ./lambda.fa ./muscons.fastq -o muscons.sam
+samtools view -b muscons.sam > muscons.bam
+../../best/target/release/best muscons.bam ./lambda.fa muscons
+
+echo "MUSCLE RESULTS"
+cat cons.summary_identity_stats.csv
+
+# CCS Consensus
+cat readheader > s.sam
+cat raw.sam >> s.sam
+
+samtools view -b s.sam > s.bam
+./doccs
+samtools fastq ./10000-of-00500.ccs.bam > ./10000-of-00500.ccs.sam.fastq
+minimap2 --split-prefix 4 -a -t 40 -x map-pb  ./lambda.fa ./10000-of-00500.ccs.sam.fastq -o 10000-of-00500.ccs.sam.fastq.lambda.sam
+samtools view -b 10000-of-00500.ccs.sam.fastq.lambda.sam > 10000-of-00500.ccs.sam.fastq.lambda.sam.bam
+../../best/target/release/best 10000-of-00500.ccs.sam.fastq.lambda.sam.bam ./lambda.fa ccscons
+cp ./10000-of-00500.ccs.sam.fastq ccscons.fastq
+
+echo "CCS RESULTS"
+cat ccscons.summary_identity_stats.csv

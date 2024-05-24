@@ -1,0 +1,7 @@
+@HD	VN:1.5	SO:unknown	pb:3.0.7
+@RG	ID:6a5a1569	PL:PACBIO	DS:READTYPE=SUBREAD;Ipd:CodecV1=ip;PulseWidth:CodecV1=pw;BINDINGKIT=101-894-200;SEQUENCINGKIT=101-826-100;BASECALLERVERSION=5.0.0;FRAMERATEHZ=100.000000	LB:HG002_23k_35pM_noPE	PU:m64014_200920_132517	SM:HG002_23k	PM:SEQUELII
+@PG	ID:baz2bam	PN:baz2bam	VN:9.0.0.92233	CL:/opt/pacbio/ppa-9.0.0/bin/baz2bam /data/pa/m64014_200920_132517.baz -o /data/pa/m64014_200920_132517 --metadata /data/pa/.m64014_200920_132517.metadata.xml -j 32 -b 8 --inlinePbi --progress --silent --maxInputQueueMB 70000 --zmwBatchMB 50000 --zmwHeaderBatchMB 30000
+@PG	ID:bazFormat	PN:bazformat	VN:1.6.0
+@PG	ID:bazwriter	PN:bazwriter	VN:9.0.0
+@PG	ID:zmwfilter	PN:zmwfilter	VN:1.0.0	CL:zmwfilter --include /tmp/n10000.zmws.txt /home/danielecook/mnt/deepconsensus/pacbio/datasets/longer_inserts_penguin/subreads/m64014_200920_132517.subreads.bam /tmp/n10000.subreads.bam
+@PG	ID:samtools	PN:samtools	PP:zmwfilter	VN:1.13	CL:samtools view -h ../n10000.subreads.bam
